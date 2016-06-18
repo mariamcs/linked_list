@@ -1,0 +1,8 @@
+#class Quese based on linked list
+
+template <class T>
+class Queue
+{
+  public:
+    
+}
