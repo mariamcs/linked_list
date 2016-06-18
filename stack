@@ -1,0 +1,73 @@
+#Class Stack based on Linked List class
+template <class T>
+class Stack()
+{
+  public:
+    Stack();
+    int size();
+    bool IsEmpty();
+    bool IsFull();
+    void push(T element);
+    T pop();
+    
+  private:
+    Node<T>* top;
+};
+
+
+template <class T>
+Stack<T>::Stack()
+{
+  top = NULL;
+}
+
+
+template <class T>
+bool Stack<T>::IsEmpty()
+{
+  if(top == NULL) return false;
+  return true;
+}
+
+
+template <class T>
+int Stack<T>::size()
+{
+  int count =0;
+  if(IsEmpty()) return 0;
+  Node<T>* temp = top;
+  while(temp->next != NULL)
+  {
+    count++;
+    temp = temp->next;
+  }
+  return count;
+}
+
+template <class T>
+void Stack<T>::push(T element)
+{
+  Node<T>* new_node;
+  new_node->value = element;
+  new_node->next=NULL;
+  
+  if(IsEmpty()) top=new_node;
+  else
+  {
+    new_node->next = top;
+    top = new_node;
+  }
+}
+
+template <class T>
+T Stack<T>::pop()
+{
+  Node<T>* temp;
+  if(IsEmpty()) retrun  NULL;
+  temp = top;
+  T value = top->value;
+  top = top->next;
+  delete temp;
+  return value;
+}
+
