@@ -4,5 +4,39 @@ template <class T>
 class Queue
 {
   public:
-    
+    Node<T>* front;
+    Node<T>* rear;
+    Queue();
+    void enqueue();
+    T dequeue();
+    bool IsEmpty();
+    int size();
+}
+
+template <class T>
+bool Queue<T>::IsEmpty()
+{
+  if(front == NULL && rear == NULL) return true;
+  return false;
+}
+
+template <class T>
+Queue<T>::Queue()
+{
+  front = NULL;
+  rear = NULL;
+}
+
+template <class T>
+int Queue<T>::Size()
+{
+  int count = 0;
+  if(IsEmpty())return count;
+  Node<T>* temp = front;
+  while(temp->next != NULL)
+  {
+    count++;
+    temp = temp->next;
+  }
+  return count;
 }
