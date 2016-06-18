@@ -1,0 +1,190 @@
+#this is the class for Linked List
+# i use the template class T to support all types 
+
+# first i define the node class which is going to be used by linked_list class
+template <class T>
+class Node
+{
+  public:
+    T value;
+    Node<T>* next;
+    
+    //function to update the value of a node
+    void update_value(T new_value)
+    {
+      this->value = new_value;
+    }
+    
+    //function to update the next node to point at
+    void update_next(Node<T>* new_next)
+    {
+      this->next = new_next;
+    }
+    
+    //function to return the value of a node
+    T return_value()
+    {
+      return this->value;
+    }
+    
+    //constructor without inital argument
+    Node()
+    { next = nullptr;}
+    //constructor with argument
+    Node(T element)
+    { this->value = element;
+      next = nullptr;}
+};
+
+
+# class for the linked list
+template <class T>
+class LinkedList
+{
+  public:
+    #constructor
+    LinkedList();
+    void insert_front(T element);
+    void insert_back(T element);
+    bool remove_back();
+    bool remove_front();
+    Node<T>* return_node(T element);
+    int size();
+    bool isEmpty();
+
+  private:
+    Node<T>* head;
+    Node<T>* tail;
+};
+
+template <class T>
+LinkedList<T>::LinkedList()
+{
+	head = NULL;
+	tail = NULL;
+}
+
+template <class T>
+void LinkedList<T>::insert_front(T element)
+{
+	Node<T>* new_node;
+	new_node->value = element;
+	new_node->next = nullptr;
+	
+	Node<T>* temp = head;
+	if(temp != Null)
+	{
+	  new_node= temp;
+	  head = new_node;
+	}
+	else
+	{
+	  head = new_node;
+	  tail = new_node;
+	}
+
+}
+
+template <class T>
+void LinkedList<T>::insert_back(T element)
+{
+	Node<T>* new_node;
+	new_node->value = element;
+	new_node->next = nullptr;
+	
+	Node<T>* temp = tail;
+	if(temp != Null)
+	{
+	  while(temp->next != NULL)
+	  {
+	    temp = temp->next;
+	  }
+	  new_node=temp;
+	  tail = new_node;
+	}
+	else
+	{
+	  head = new_node;
+	  tail = new_node;
+	}
+
+}
+
+template <class T>
+bool LinkedList<T>::remove_front()
+{
+  if ( head == NULL && tail == NULL) return false;
+  if( head == tail) 
+  {
+    delete head;
+    head=tail=NULL;
+  }
+	Node<T>* temp = head;
+	if(temp != Null)
+	{
+	  head = temp->next;
+	  delete head;
+	}
+	else
+	{
+	  cout<<"the list is empty!"<<endl;
+	}
+	return true;
+
+}
+
+template <class T>
+bool LinkedList<T>::remove_back()
+{
+
+  if ( head == NULL && tail == NULL) return false;
+  if( head == tail) 
+  {
+    delete tail;
+    head=tail=NULL;
+  }
+	Node<T>* temp = head;
+	Node<T>* temp_next = temp->next;
+	
+	if( temp != NULL)
+	{
+  	while((temp_next->next) != NULL)
+  	{
+  	  temp=temp->next;
+  	  temp_next = temp->next;
+  	}
+  	//temp_next is the tail
+  	//temp points to the node before the tail
+  	tail = temp;
+  	temp->next = NULL;
+  	delete temp_next;
+  }
+	else
+	{
+	  cout<<"the list is empty!"<<endl;
+	}
+  return true;
+}
+
+template <class T>
+bool LinkedList<T>::isEmpty()
+{
+	if (head == NULL && tail == NULL) {return true;}
+	else {return false;}
+}
+
+template <class T>
+int LinkedList<T>::size()
+{	
+	if (head == NULL && tail == NULL) {return 0;}
+
+	Node<T>* temp = head;
+	int count = 0;
+
+	while (temp != NULL)
+	{
+		count = count + 1;
+		temp = temp->next;
+	}
+	return count;
+}
