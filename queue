@@ -7,7 +7,7 @@ class Queue
     Node<T>* front;
     Node<T>* rear;
     Queue();
-    void enqueue();
+    void enqueue(T element);
     T dequeue();
     bool IsEmpty();
     int size();
@@ -39,4 +39,35 @@ int Queue<T>::Size()
     temp = temp->next;
   }
   return count;
+}
+
+template <class T>
+void Queue<T>::enqueue(T element)
+{
+  Node<T>* new_node;
+  new_node->value = element;
+  new_node->next = NULL;
+  if(IsEmpty()) 
+  {
+    front = new_node;
+    rear = new_node;
+  }
+  else
+  {
+    rear->next = new_node;
+    rear = new_node;
+    
+  }
+}
+
+template <class T>
+T Queue<T>::deqeue()
+{
+  if(IsEmpty()) return 0;
+  Node<T>* temp = front;
+  int value = front->value;
+  front = front->next;
+  delete temp;
+  return value;
+  
 }
