@@ -202,3 +202,126 @@ T LinkedList<T>::Mth_Element(int m)
 	int value = temp->value;
 	return value;
 }
+
+
+#function to check if a linked list is cyclic or acyclic
+# if we have the head and tail, we will check if the tail->next == head
+# if the linked list just have head, we have to reach the last node of a list and check the last_node-> next == head
+# if the cyclic can happen in the middle nodes, we have to use 2 pointers , fpoint and lpoint
+# they both initialized by using head node, 
+# fpoint = head, lpoint = head->next
+# while(true)
+#	if(fpoint == lpoint) return true; //meands cyclic
+#	if(fpoint = lpoint->next) return true; //means cyclic
+#	fpoint = fpoint->next; //advance one node
+#	lpoint = lpoint->next->next; //advance two nodes
+
+
+#function to reverse a linkedlist
+# if we have two pointers , head and tail 
+#non-recursive 
+Node<T>* future, previous, temp;
+temp = head->next;
+previous = head;
+while(temp != NULL)
+{
+	future = temp->next;
+	temp->next = previous; 
+	//move the pointers forward
+	previous = temp;
+	temp = future;
+}
+head = previous;
+
+#recursive
+Node<T>* reverse( Node<T>* ptr , Node<T>* previous)
+{
+    Node<T>* temp;
+    if(ptr->next == NULL) {
+        ptr->next = previous;
+        return ptr;
+    } 
+    else {
+        temp = reverse(ptr->next, ptr);
+        ptr->next = previous;
+        return temp;
+    }
+}
+reversedHead = reverse(head, NULL);
+
+#minimum /maximum in a linked list 
+template <class T>
+void LinkedList<T>::find_min(Node<T>* head)
+{
+	if(head == NULL) cout<<"the list is empty"<<endl;
+	else{
+		int min = head->value;
+		while(head != NULL)
+		{
+			if(min <head->value)min = head->value;
+			head=head->next;
+		}
+	cout<<"minimum is :"<<min<<endl;
+	}
+}
+
+#function to sort a linked list 
+# best sorting algorithm for un-ordered list is merge sort with time complexity of O(nlog(n)) and space complexity of O(n)
+
+MergeSort(head)
+1) If head is NULL or there is only one element in the Linked List 
+    then return head.
+2) Else divide the linked list into two halves.  
+      Split(head, &a, &b); 
+3) Sort the two halves a and b.
+      MergeSort(a);
+      MergeSort(b);
+4) Merge the sorted a and b (using Merge()) 
+   and update the head pointer 
+     *head = Merge(a, b);
+     
+     
+# split function which splits the list in the middle
+# Finding the middle element of the list for splitting
+Node<T>* getMiddle(Node<T>* head) {
+    if(head == null) { return head; }
+    Node<T>* slow, fast;
+    slow = fast = head;
+    while(fast->next != null && fast->next->next != null) {
+        slow = slow->next; fast = fast->next->next;
+    }
+    return slow;
+}
+
+#Merge
+Node<T>* Merge(Node<T>* a, Node<T>* b) {
+    Node<T>* leftHead, temp;
+    temp = leftHead;
+    while(a !=null && b!= null) {
+        if(a->value <= b->value) {
+	   	temp->next = a; 
+           	a = a->next; 
+        }
+        else { 
+        	temp->next = b; 
+        	b = b->next; 
+        }
+        temp=temp->next;
+    }
+    temp->next = (a == null) ? b : a;
+    return leftHead->next;
+}
+
+#MergeSort
+Node<T>* MergeSort(Node<T>* head) {
+    if(head == null || head.next == null) { return head; }
+    Node<T>* middle = getMiddle(head);      //get the middle of the list
+    Node<T>* sHalf = middle->next; 
+    middle->next = null;   
+    return Merge(MergeSort(head),MergeSort(sHalf));  
+}
+
+
+#insert into a soretd linked list
+
+#delete from a sorted linked list
